@@ -1,0 +1,36 @@
+package ${package};
+
+import ${packageEntity}.${entity};
+import ${packageMapper}.${mapperName};
+import ${packageService}.${serviceName};
+import ${superServiceImplClassPackage};
+import org.springframework.stereotype.Service;
+import com.baomidou.mybatisplus.plugins.Page;
+import java.util.List;
+/**
+ * <p>
+ * ${table.comment}  服务实现类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Service
+public class ${serviceImplName} extends ${superServiceImplClass}<${mapperName}, ${entity}> implements ${superServiceClass} {
+
+    /**
+    * 分页查询
+    *
+    * @param page
+    * @param vo
+    * @return
+    */
+    @Override
+    public Page<${entity}> selectPageList(Page page, ${entity} vo) {
+        List<${entity}> list = this.baseMapper.selectPageList(page,vo);
+//        Integer total = this.baseMapper.selectPageListCount(vo);
+        page.setRecords(list);
+//        page.setTotal(total);
+        return page;
+    }
+}

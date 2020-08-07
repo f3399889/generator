@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${packageMapper}.${mapperName}">
+#if(${enableCache})
+    <!--开启二级缓存-->
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+#end
+
+    <resultMap id="BaseResultMap" type="${packageEntity}.${entity}">
+#foreach($field in ${fields})
+#if(${field.primaryKey})
+        <id column="${field.filedName}" property="${field.EntityFiledName}" />
+#else
+        <result column="${field.filedName}" property="${field.EntityFiledName}" />
+#end
+#end
+    </resultMap>
+
+    <!-- 通用查询结果列-->
+    <sql id="Base_Column_List">
+        ${fieldsStr}
+    </sql>
+    <!--分页查询-->
+    <select id="selectPageList" resultType="${packageEntity}.${entity}">
+        SELECT * FROM ${tableName}
+        WHERE
+        1=1
+#foreach($field in ${fields})
+        <if test="${field.EntityFiledName} != null">
+            AND ${field.filedName}=#{${field.EntityFiledName}}
+        </if>
+#end
+    </select>
+    <!--分页查询总记录数 基本没用到-->
+    <select id="selectPageListCount" resultType="integer">
+        SELECT count(*) FROM ${tableName}
+        WHERE
+        1=1
+        #foreach($field in ${fields})
+            <if test="${field.EntityFiledName} != null">
+                AND ${field.filedName}=#{${field.EntityFiledName}}
+            </if>
+        #end
+    </select>
+</mapper>

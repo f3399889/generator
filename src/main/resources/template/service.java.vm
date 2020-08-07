@@ -1,0 +1,22 @@
+package ${package};
+
+import ${packageEntity}.${entity};
+import ${superServiceClassPackage};
+import com.baomidou.mybatisplus.plugins.Page;
+/**
+ * <p>
+ * 服务类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+public interface ${serviceName} extends ${superServiceClass}<${entity}> {
+    /**
+     * 分页查询
+     * @param page
+     * @param vo 查询参数
+     * @return
+     */
+    Page<${entity}> selectPageList(Page page, ${entity} vo);
+}

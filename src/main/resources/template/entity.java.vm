@@ -1,0 +1,81 @@
+package ${package.entityPackage};
+
+#if(${activeRecord})
+import com.baomidou.mybatisplus.activerecord.Model;
+#end
+#if(${package.idGenType}!="ID_WORKER")
+import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.annotations.TableId;
+#end
+import com.baomidou.mybatisplus.annotations.TableField;
+#if("${package.tableName}" != "")
+import com.baomidou.mybatisplus.annotations.TableName;
+#end
+import java.io.Serializable;
+#if(${package.hasDate})
+import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+#end
+#if(${package.hasChildren})
+import java.util.List;
+import java.util.ArrayList;
+#end
+#if(${package.valid})
+import javax.validation.constraints.*
+#end
+#if(${package.hasDecimal})
+import java.math.BigDecimal;
+#end
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+/**
+ * <p>
+ * ${package.notes}
+ * </p>
+ *
+ * @author ${package.author}
+ * @since ${package.date}
+ */
+#if("${package.tableName}" != "")
+@TableName("${package.tableName}")
+#end
+@AllArgsConstructor
+@Getter
+@NoArgsConstructor
+@Setter
+#if(${activeRecord})
+public class ${package.name} extends Model<${entity}> {
+#else
+public class ${package.name} implements Serializable {
+#end
+
+    private static final long serialVersionUID = 1L;
+
+#foreach($field in ${package.fields})
+    /**
+     * ${field.notes}
+     */
+#if(${field.keyFlag} && ${package.idGenType}!="ID_WORKER")
+    @TableId(type = IdType.${package.idGenType})
+#end
+#if(${field.tableName})
+    @TableField(value="${field.tableName}")
+#end
+#if(${field.propertyType.equals("Date")})
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+#end
+#if(${field.hasValid})
+	@${field.validType}#if($field.hasExpress)(#foreach($param in ${field.validExpress.keySet()})#if($velocityCount==${field.validExpress.keySet().size()})${param}=${field.validExpress.get($param)}#else${param}=${field.validExpress.get($param)},#end#end)
+#end
+#end
+    private ${field.propertyType} ${field.name};
+#end
+
+#foreach($children in ${package.children})
+	@TableField( exists = false )
+	private List<${children}> ${children.toLowerCase()}List = new ArrayList<>();
+#end
+
+}

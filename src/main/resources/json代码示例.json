@@ -1,0 +1,70 @@
+[
+    {
+		"children": [
+            {
+                "cacheEnable": "1",
+                "fields": [
+                    {
+                        "code": "childName",
+                        "notes": "产生日志用户",
+                        "primaryKey": "0",
+						"auto":"0",
+                        "tableFiledName": "child_name",
+                        "type": "1",
+                        "validExpress": {
+                            "message": "错误之后的提示信息,如果是字符串类型请加 ''\" ",
+                            "min": "参照hibernate validator校验规则",
+                            "value": "值"
+                        },
+                        "validType": "3",
+						"length": "30"
+                    },
+					{
+                        "code": "id",
+                        "notes": "产生日志用户",
+                        "primaryKey": "1",
+						"auto":"1",
+                        "tableFiledName": "id",
+                        "type": "3",
+                        "validExpress": {
+                            "message": "错误之后的提示信息",
+                            "min": "参照hibernate validator校验规则",
+                            "value": "值"
+                        },
+                        "validType": "3",
+						"length": "30"
+                    }
+                ],
+                "code": "Log",
+                "notes": "用户日志表",
+                "relation_child": "child_name",
+                "relation_parent": "name",
+				"package": "tool.json",
+                "tableName": "tb_user_log_info"
+            }
+        ],
+        "fields": [
+                    {
+                        "code": "name",
+                        "notes": "名字",
+                        "primaryKey": "1",
+						"auto":"0",
+                        "tableFiledName": "name",
+                        "type": "1",
+                        "validExpress": {
+                            "message": "错误之后的提示信息",
+                            "min": "参照hibernate validator校验规则",
+                            "value": "值"
+                        },
+                        "validType": "3",
+						"length": "30"
+                    }
+		],
+		"cacheEnable": "1",
+        "code": "User",
+        "notes": "用户表",
+        "package": "tool.json",
+        "tableName": "tb_user_info",
+        "author":"作者"
+    }
+]

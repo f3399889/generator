@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+	
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>[%-5p] %X{userId} %d{yyyy-MM-dd HH:mm:ss} %F:%L-%m%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%m%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${catalina.base}/logs/webgis.log</File>
+		<encoder>
+			<pattern>[%-5p] %X{userId} %d{yyyy-MM-dd HH:mm:ss} %F:%L-%m%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${catalina.base}/logs/webgis.log.%d
+			</fileNamePattern>
+			<maxHistory>360</maxHistory>
+		</rollingPolicy>
+	</appender>
+
+	<appender name="EVENT"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${catalina.base}/logs/event.log</file>
+		<encoder>
+			<pattern>%msg%n</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${catalina.base}/logs/event.log.%d</fileNamePattern>
+			<maxHistory>360</maxHistory>
+		</rollingPolicy>
+	</appender>
+
+
+	<logger name="com.ibatis" level="WARN" />
+	<logger name="org.springframework" level="WARN" />
+	<logger name="java.sql.PreparedStatement" level="WARN" />
+	<logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate"
+		level="WARN" />
+	<logger name="java.sql.Statement" level="WARN" />
+	<logger name="com.ibatis.common.jdbc.SimpleDataSource" level="WARN" />
+	<logger name="java.sql.ResultSet" level="WARN" />
+	<logger name="java.sql.Connection" level="WARN" />
+	<logger name="com.ibatis.common.jdbc.ScriptRunner" level="WARN" />
+	<root level="debug">
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+		<appender-ref ref="EVENT" />
+	</root>
+</configuration>

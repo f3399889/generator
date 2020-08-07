@@ -1,0 +1,80 @@
+package ${package};
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.PostMapping;
+import com.baomidou.mybatisplus.plugins.Page;
+import ${package}.util.PageParam;
+import ${package}.util.PageResult;
+import ${packageService}.${serviceName};
+import ${packageEntity}.${entity};
+import javax.servlet.http.HttpServletRequest;
+import com.alibaba.fastjson.JSON;
+import java.util.List;
+/**
+ * <p>
+ * ${table.comment}  前端控制器
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Controller
+@RequestMapping("/${controllerPath}")
+public class ${controllerName} {
+    @Autowired
+    private ${serviceName} ${serviceNameInController};
+
+    /**
+    * 搜索
+    * @param page
+    * @param vo 如果是单表可以直接用实体类，如果是联表查询那就在vo包下建立vo
+    * @return
+    */
+    @PostMapping("/search")
+    @ResponseBody
+    public PageResult<${entity}> search( PageParam<${entity}> page,${entity} vo) {
+        Page<${entity}> result = ${serviceNameInController}.selectPageList(page,vo);
+        return new PageResult<${entity}>(result);
+    }
+
+    /**
+     * 新增保存
+     * @param vo
+     * @return
+     */
+    @PostMapping("/save")
+    @ResponseBody
+    public Boolean save(${entity} vo) {
+        Boolean result = ${serviceNameInController}.insert(vo);
+        return result;
+    }
+
+    /**
+     * 修改保存
+     * @param vo
+     * @return
+     */
+    @PostMapping("/modify")
+    @ResponseBody
+    public Boolean modify( ${entity} vo) {
+        Boolean result = ${serviceNameInController}.updateById(vo);
+        return result;
+    }
+    /**
+     * 删除
+     * @param ids 被删除的ids集合
+     */
+    @PostMapping("/deleteByIds")
+    @ResponseBody
+    public Boolean deleteById( String ids) {
+        List<Integer> idList =  JSON.parseArray(ids, Integer.class);
+        Boolean result = ${serviceNameInController}.deleteBatchIds(idList);
+//        Boolean result = true;
+        return result;
+    }
+
+}
